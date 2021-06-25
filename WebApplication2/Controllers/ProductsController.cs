@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
 using WebApplication2.Data.Entities;
+using WebApplication2.Helpers;
 
 namespace WebApplication2.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUserHelper _userHelper;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, UserHelper userHelper)
         {
             _productRepository = productRepository;
+            _userHelper = userHelper;
         }
 
         // GET: Products
         public IActionResult Index()
         {
-            return View(_productRepository.GetAll());
+            return View(_productRepository.GetAll().OrderBy(P => P.Name));
         }
 
         // GET: Products/Details/5
@@ -57,6 +60,7 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
+                product.user = await _userHelper.GetUserByEmailAsync("ruiduarte987@gmail.com");
                 await _productRepository.CreateAsync(product);
                 return RedirectToAction(nameof(Index));
             }
