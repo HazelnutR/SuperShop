@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication2.Data.Entities
 {
-    public class Product
+    public class Product : IEntity
     {
         public int Id { get; set; }
 
