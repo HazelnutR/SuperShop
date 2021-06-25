@@ -8,6 +8,6 @@ namespace WebApplication2.Data
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-
+        public IQueryable GetAllWithUsers();
     }
 }

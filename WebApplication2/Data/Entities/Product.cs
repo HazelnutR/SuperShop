@@ -34,5 +34,18 @@ namespace WebApplication2.Data.Entities
         public double Stock { get; set; }
 
         public User user { get; set; }
+
+        public string ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://localhost:44352{ImageUrl.Substring(1)}";
+            }
+        }
     }
 }
